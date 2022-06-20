@@ -1,9 +1,18 @@
 from time import sleep
 from scapy.all import *
 
+#TODO""
+# 1-complete show_udp and show icmp
+# 2- make and complite the protocol type
+# """
 
 def show_UDP(pck):
     print("This packet using UDP Protocol...\n")
+    print("summary of packet : \n")
+    print(pck.summary())
+    print(f"\nSport:{pck['UDP'].sport}  dport:{pck['UDP'].dport}\n")
+    print(f"Len:{pck['UDP'].len}  CheckSum:{pck['UDP'].chksum}")
+    input()
 
 def show_TCP(pck):
     print("This packet using TCP Protocol...\n")
@@ -15,7 +24,11 @@ def show_TCP(pck):
 
 def show_ICMP(pck):
     print("This packet using ICMP Protocol...\n")
-
+    print("summary of packet : \n")
+    print(pck.summary())
+    print(f"\nType:{pck['ICMP'].type}  code:{pck['ICMP'].code}\n")
+    print(f"CheckSum:{pck['ICMP'].chksum}")
+    input()
 
 
 def sniff_all():
