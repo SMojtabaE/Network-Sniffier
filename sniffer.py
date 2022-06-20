@@ -1,3 +1,5 @@
+from itertools import count
+from struct import pack
 from time import sleep
 from scapy.all import *
 
@@ -37,6 +39,8 @@ def sniff_TCP():
     count =int(input("\n\n\nEnter number of TCP packets you want : "))
     pck = sniff(filter="tcp",count=count)
     print(pck)
+    frag = fragment_counnt(pck)
+    print(f"\n\ntotal fragments number is {frag}")
     inp = input("want the detales?(y/n)")
     if inp == "y":
         while True:
@@ -55,6 +59,8 @@ def sniff_UDP():
     count =int(input("\n\n\nEnter number of UDP packets you want : "))
     pck = sniff(filter="udp",count=count)
     print(pck)
+    frag = fragment_counnt(pck)
+    print(f"\n\ntotal fragments number is {frag}")
     inp = input("want the detales?(y/n)")
     if inp == "y":
         while True:
@@ -72,6 +78,8 @@ def sniff_ICMP():
     count =int(input("\n\n\nEnter number of ICMP packets you want : "))
     pck = sniff(filter="icmp",count=count)
     print(pck)
+    frag = fragment_counnt(pck)
+    print(f"\n\ntotal fragments number is {frag}")
     inp = input("want the detales?(y/n)")
     if inp == "y":
         while True:
@@ -85,11 +93,23 @@ def sniff_ICMP():
             else:
                 show_ICMP(pck[int(numberOFpck)])
 
+
+def fragment_count(pck):
+    count = 0
+    for packet in pck:
+        if int(packet['IP'].frag) > 0 :
+            count += 1
+    return count
+
+# Sniff all  protocols
+
 def sniff_all():
     count =int(input("\n\n\nEnter number of packets you want : "))
     pck = sniff(count=count)
     print(pck)
-    inp = input("want the detales?(y/n)")
+    frag = fragment_counnt(pck)
+    print(f"\n\ntotal fragments number is {frag}")
+    inp = input("\n\nwant the detales?(y/n)")
     if inp == "y":
         while True:
             print(pck.show())
