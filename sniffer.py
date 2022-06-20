@@ -2,10 +2,12 @@ from time import sleep
 from scapy.all import *
 
 #TODO""
-# 1-complete show_udp and show icmp
+# 1-complete show_udp and show icmp -done
 # 2- make and complite the protocol type
 # """
 
+
+# Show protocol functions
 def show_UDP(pck):
     print("This packet using UDP Protocol...\n")
     print("summary of packet : \n")
@@ -30,6 +32,58 @@ def show_ICMP(pck):
     print(f"CheckSum:{pck['ICMP'].chksum}")
     input()
 
+# Sniff protocol functions
+def sniff_TCP():
+    count =int(input("\n\n\nEnter number of TCP packets you want : "))
+    pck = sniff(filter="tcp",count=count)
+    print(pck)
+    inp = input("want the detales?(y/n)")
+    if inp == "y":
+        while True:
+            print(pck.show())
+            numberOFpck = input("which one do you want to see (q to back) ? ")
+            if numberOFpck == "q":
+                break
+            elif int(numberOFpck) not in range(count):
+                print("enter corroct number from the list!!!")
+                sleep(2)
+            else:
+                show_TCP(pck[int(numberOFpck)])
+                
+
+def sniff_UDP():
+    count =int(input("\n\n\nEnter number of UDP packets you want : "))
+    pck = sniff(filter="udp",count=count)
+    print(pck)
+    inp = input("want the detales?(y/n)")
+    if inp == "y":
+        while True:
+            print(pck.show())
+            numberOFpck = input("which one do you want to see (q to back) ? ")
+            if numberOFpck == "q":
+                break
+            elif int(numberOFpck) not in range(count):
+                print("enter corroct number from the list!!!")
+                sleep(2)
+            else:
+                show_UDP(pck[int(numberOFpck)])
+
+def sniff_ICMP():
+    count =int(input("\n\n\nEnter number of ICMP packets you want : "))
+    pck = sniff(filter="icmp",count=count)
+    print(pck)
+    inp = input("want the detales?(y/n)")
+    if inp == "y":
+        while True:
+            print(pck.show())
+            numberOFpck = input("which one do you want to see (q to back) ? ")
+            if numberOFpck == "q":
+                break
+            elif int(numberOFpck) not in range(count):
+                print("enter corroct number from the list!!!")
+                sleep(2)
+            else:
+                show_ICMP(pck[int(numberOFpck)])
 
 def sniff_all():
     count =int(input("\n\n\nEnter number of packets you want : "))
@@ -58,6 +112,26 @@ def sniff_all():
                 print(pck[int(numberOFpck)].show())
                 input()
 
+def sniff_protocol():
+    while True:
+        print("\n\nwhich one?\n\n\n")
+        print("    1) TCP\n")  # 4 spaces
+        print("    2) UDP\n")
+        print("    3) ICMP\n\n\n")
+        protocol = int(input("(0 to back): "))
+
+        if protocol == 1:
+            sniff_TCP()
+        elif protocol == 2:
+            sniff_UDP()
+        elif protocol == 3:
+            sniff_ICMP()
+        elif protocol == 0 :
+            break
+        else :
+            print("enter a corroct number!!!!")
+          
+
 def menu():
     while True:
         print("Welcom,What do you want??\n\n\n")        
@@ -68,12 +142,7 @@ def menu():
         if inp == 1:
             sniff_all()
         elif inp == 2:
-            print("which one?\n\n\n")
-            print("    1) TCP\n")  # 4 spaces
-            print("    2) UDP\n")
-            print("    3) ICMP\n")
-            protocol = int(input(" : "))
-            sniff_protocol(protocol)
+            sniff_protocol()
         elif inp == 0:
             quit()
         else:
