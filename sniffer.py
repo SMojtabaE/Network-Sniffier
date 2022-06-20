@@ -2,6 +2,20 @@ from time import sleep
 from scapy.all import *
 
 
+def UDP(pck):
+    pass
+
+def TCP(pck):
+    print("This packet using TCP Protocol...\n")
+    print(pck.summary())
+    print(f"\nSport:{pck['TCP'].sport}  dport:{pck['TCP'].dport}  sequensN:{pck['TCP'].seq}\n")
+    print(f"ACK:{pck['TCP'].ack}  Flag:{pck['TCP'].flags}  Len:{pck['TCP'].len}  CheckSum:{pck['TCP'].chksum}")
+
+def ICMP(pck):
+    pass
+
+
+
 def sniff_all():
     count =int(input("\n\n\nEnter number of packets you want : "))
     pck = sniff(count=count)
