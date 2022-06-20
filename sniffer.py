@@ -2,17 +2,19 @@ from time import sleep
 from scapy.all import *
 
 
-def UDP(pck):
-    pass
+def show_UDP(pck):
+    print("This packet using UDP Protocol...\n")
 
-def TCP(pck):
+def show_TCP(pck):
     print("This packet using TCP Protocol...\n")
+    print("summary of packet : \n")
     print(pck.summary())
     print(f"\nSport:{pck['TCP'].sport}  dport:{pck['TCP'].dport}  sequensN:{pck['TCP'].seq}\n")
-    print(f"ACK:{pck['TCP'].ack}  Flag:{pck['TCP'].flags}  Len:{pck['TCP'].len}  CheckSum:{pck['TCP'].chksum}")
+    print(f"ACK:{pck['TCP'].ack}  Flag:{pck['TCP'].flags}  Len:{pck['IP'].len}  CheckSum:{pck['TCP'].chksum}")
+    input()
 
-def ICMP(pck):
-    pass
+def show_ICMP(pck):
+    print("This packet using ICMP Protocol...\n")
 
 
 
@@ -22,21 +24,26 @@ def sniff_all():
     print(pck)
     inp = input("want the detales?(y/n)")
     if inp == "y":
-        print(pck.show())
-        numberOFpck = int(input("which one do you want to see ? "))
-
-        if "UDP" in pck[numberOFpck]:
-            UDP(pck[numberOFpck])
-        elif "TCP" in pck[numberOFpck]:
-            TCP(pck[numberOFpck])
-        elif "ICMP" in pck[numberOFpck]:
-            ICMP(pck[numberOFpck])
-        else:
-            print("tha package is not TCP or UDP or ICMP...")
-            print("\nopening package...")
-            sleep(2)
-            print(pck[numberOFpck].show())
-            input()
+        while True:
+            print(pck.show())
+            numberOFpck = input("which one do you want to see (q to back) ? ")
+            if numberOFpck == "q":
+                break
+            elif int(numberOFpck) not in range(count):
+                print("enter corroct number from the list!!!")
+                sleep(2)
+            elif "UDP" in pck[int(numberOFpck)]:
+                show_UDP(pck[int(numberOFpck)])
+            elif "TCP" in pck[int(numberOFpck)]:
+                show_TCP(pck[int(numberOFpck)])
+            elif "ICMP" in pck[int(numberOFpck)]:
+                show_ICMP(pck[int(numberOFpck)])
+            else:
+                print("tha package is not TCP or UDP or ICMP...")
+                print("\nopening package...")
+                sleep(1)
+                print(pck[int(numberOFpck)].show())
+                input()
 
 def menu():
     while True:
@@ -58,3 +65,7 @@ def menu():
             quit()
         else:
             print("Ops, enter the right numbers :D")
+
+
+
+menu()
