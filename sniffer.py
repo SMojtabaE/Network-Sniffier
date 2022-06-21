@@ -1,11 +1,10 @@
-from itertools import count
-from struct import pack
 from time import sleep
 from scapy.all import *
 
 #TODO""
 # 1-complete show_udp and show icmp -done
-# 2- make and complite the protocol type
+# 2- make and complite the protocol type-DONE
+# 3- make fragment counter-DONE
 # """
 
 
@@ -39,7 +38,7 @@ def sniff_TCP():
     count =int(input("\n\n\nEnter number of TCP packets you want : "))
     pck = sniff(filter="tcp",count=count)
     print(pck)
-    frag = fragment_counnt(pck)
+    frag = fragment_count(pck)
     print(f"\n\ntotal fragments number is {frag}")
     inp = input("want the detales?(y/n)")
     if inp == "y":
@@ -59,7 +58,7 @@ def sniff_UDP():
     count =int(input("\n\n\nEnter number of UDP packets you want : "))
     pck = sniff(filter="udp",count=count)
     print(pck)
-    frag = fragment_counnt(pck)
+    frag = fragment_count(pck)
     print(f"\n\ntotal fragments number is {frag}")
     inp = input("want the detales?(y/n)")
     if inp == "y":
@@ -78,7 +77,7 @@ def sniff_ICMP():
     count =int(input("\n\n\nEnter number of ICMP packets you want : "))
     pck = sniff(filter="icmp",count=count)
     print(pck)
-    frag = fragment_counnt(pck)
+    frag = fragment_count(pck)
     print(f"\n\ntotal fragments number is {frag}")
     inp = input("want the detales?(y/n)")
     if inp == "y":
@@ -107,7 +106,7 @@ def sniff_all():
     count =int(input("\n\n\nEnter number of packets you want : "))
     pck = sniff(count=count)
     print(pck)
-    frag = fragment_counnt(pck)
+    frag = fragment_count(pck)
     print(f"\n\ntotal fragments number is {frag}")
     inp = input("\n\nwant the detales?(y/n)")
     if inp == "y":
@@ -132,6 +131,7 @@ def sniff_all():
                 print(pck[int(numberOFpck)].show())
                 input()
 
+# Sniff a pritocol
 def sniff_protocol():
     while True:
         print("\n\nwhich one?\n\n\n")
@@ -154,7 +154,7 @@ def sniff_protocol():
 
 def menu():
     while True:
-        print("Welcom,What do you want??\n\n\n")        
+        print("\n\n\nWelcom,What do you want??\n\n\n")        
         print("          1) Sniff everything!\n")       # 10 spaces-
         print("          2) Sniff a protocol!\n\n\n")
 
