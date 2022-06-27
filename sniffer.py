@@ -1,13 +1,6 @@
 from time import sleep
 from scapy.all import *
 
-#TODO""
-# 1-complete show_udp and show icmp -done
-# 2- make and complite the protocol type-DONE
-# 3- make fragment counter-DONE
-# """
-
-
 # Show protocol functions
 def show_UDP(pck):
     print("This packet using UDP Protocol...\n")
@@ -155,7 +148,7 @@ def sniff_protocol():
 def menu():
     while True:
         print("\n\n\nWelcom,What do you want??\n\n\n")        
-        print("          1) Sniff everything!\n")       # 10 spaces-
+        print("          1) Sniff everything!\n")       # 10 spaces
         print("          2) Sniff a protocol!\n\n\n")
 
         inp = int(input("(0 to Exit) : "))
